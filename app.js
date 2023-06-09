@@ -2,13 +2,28 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 
 require('dotenv/config')
 
+app.use(bodyParser.urlencoded({
+  extended:true
+}));
+app.use(bodyParser.json());
+app.use(cors());
+
+// import routes
+const authRoutes = require('./routes/auth')
+const postRoutes = require('./routes/auth')
+
+app.use('/auth', authRoutes)
+app.use('/post', postRoutes)
+
+
 app.get('/', (req, res) => {
-  res.send('KOCAK')
-})
+  res.send('Hello World!')
+}) 
 
 mongoose.connect(process.env.DB_CONNECTION,{
   useNewUrlParser: true,
